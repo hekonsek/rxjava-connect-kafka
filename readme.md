@@ -1,9 +1,9 @@
-# Vert.x Pipes
+# RxJava connect Kafka
 
-[![Version](https://img.shields.io/badge/Vert.x%20Pipes-0.4-blue.svg)](https://github.com/hekonsek/vertx-pipes/releases)
-[![Build](https://api.travis-ci.org/hekonsek/vertx-pipes.svg)](https://travis-ci.org/hekonsek/vertx-pipes)
+[![Version](https://img.shields.io/badge/RxJava%20Connect%20Kafka-0.0-blue.svg)](https://github.com/hekonsek/rxjava-connect-kafka/releases)
+[![Build](https://api.travis-ci.org/hekonsek/rxjava-connect-kafka.svg)](https://travis-ci.org/hekonsek/rxjava-connect-kafka)
 
-Vert.x-based data pipes abstraction over Apache Kafka.
+Connector between RxJava events and [Apache Kafka](https://kafka.apache.org) cluster.
 
 ## Installation
 
@@ -11,8 +11,8 @@ In order to start using Vert.x Pipes add the following dependency to your Maven 
 
     <dependency>
       <groupId>com.github.hekonsek</groupId>
-      <artifactId>vertx-pipes</artifactId>
-      <version>0.4</version>
+      <artifactId>vertx-connect-kafka</artifactId>
+      <version>0.1</version>
     </dependency>
 
 ## Usage
