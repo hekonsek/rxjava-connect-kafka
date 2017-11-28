@@ -1,4 +1,4 @@
-# RxJava connect Kafka
+# RxJava Kafka connector
 
 [![Version](https://img.shields.io/badge/RxJava%20Connect%20Kafka-0.0-blue.svg)](https://github.com/hekonsek/rxjava-connect-kafka/releases)
 [![Build](https://api.travis-ci.org/hekonsek/rxjava-connect-kafka.svg)](https://travis-ci.org/hekonsek/rxjava-connect-kafka)
