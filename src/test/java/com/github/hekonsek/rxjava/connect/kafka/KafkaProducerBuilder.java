@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.hekonsek.rxjava.pipes;
+package com.github.hekonsek.rxjava.connect.kafka;
 
 import com.google.common.collect.ImmutableMap;
 import io.vertx.reactivex.core.Vertx;

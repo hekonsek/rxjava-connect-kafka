@@ -14,9 +14,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.hekonsek.rxjava.pipes;
+package com.github.hekonsek.rxjava.connect.kafka;
 
-import com.github.hekonsek.rxjava.connect.kafka.KafkaSource;
 import com.google.common.collect.ImmutableMap;
 import io.debezium.kafka.KafkaCluster;
 import io.vertx.core.json.Json;
@@ -36,7 +35,9 @@ import java.io.IOException;
 import java.util.Map;
 
 import static com.github.hekonsek.rxjava.connect.kafka.KafkaEventAdapter.simpleMapping;
-import static com.github.hekonsek.rxjava.pipes.KafkaProducerBuilder.pipeProducer;
+import static com.github.hekonsek.rxjava.connect.kafka.KafkaProducerBuilder.pipeProducer;
+import static com.github.hekonsek.rxjava.event.Headers.ADDRESS;
+import static com.github.hekonsek.rxjava.event.Headers.KEY;
 import static com.google.common.io.Files.createTempDir;
 import static io.vertx.reactivex.core.Vertx.vertx;
 import static java.util.UUID.randomUUID;
@@ -55,12 +56,25 @@ public class KafkaSourceTest {
     String topic = randomUUID().toString();
 
     @Test
-    public void shouldConsume(TestContext context) {
+    public void shouldConsumePayload(TestContext context) {
         Async async = context.async();
         new KafkaSource<String, Map>(vertx(), topic).build().
                 map(event ->  (String) event.payload().get("foo")).
                 subscribe(event -> {
                     assertThat(event).isEqualTo("bar");
+                    async.complete();
+                });
+
+        Bytes event = new Bytes(Json.encode(ImmutableMap.of("foo", "bar")).getBytes());
+        pipeProducer(vertx()).rxWrite(KafkaProducerRecord.create(topic, "key", event)).subscribe();
+    }
+
+    @Test
+    public void shouldConsumeKafkaMetadata(TestContext context) {
+        Async async = context.async();
+        new KafkaSource<String, Map>(vertx(), topic).build().
+                subscribe(event -> {
+                    assertThat(event.headers()).containsEntry(KEY, "key").containsEntry(ADDRESS, topic);
                     async.complete();
                 });
 
