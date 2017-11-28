@@ -12,7 +12,7 @@
     <groupId>com.github.hekonsek</groupId>
     <artifactId>rxjava-connect-kafka</artifactId>
     <name>${project.artifactId}</name>
-    <version>0.1</version>
+    <version>0.2-SNAPSHOT</version>
 
     <properties>
         <!-- General project settings -->
@@ -270,7 +270,7 @@
         <connection>scm:git:git@github.com:hekonsek/rxjava-connect-kafka.git</connection>
         <developerConnection>scm:git:git@github.com:hekonsek/rxjava-connect-kafka.git</developerConnection>
         <url>git@github.com:hekonsek/rxjava-connect-kafka.git</url>
-        <tag>rxjava-connect-kafka-0.1</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
