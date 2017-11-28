@@ -61,17 +61,17 @@ public class KafkaSource<K, V> {
                 toObservable().map(eventAdapter.getMapping());
     }
 
-    public KafkaSource bootstrapServers(String bootstrapServers) {
+    public KafkaSource<K, V> bootstrapServers(String bootstrapServers) {
         this.bootstrapServers = bootstrapServers;
         return this;
     }
 
-    public KafkaSource groupId(String groupId) {
+    public KafkaSource<K, V> groupId(String groupId) {
         this.groupId = groupId;
         return this;
     }
 
-    public KafkaSource groupId(KafkaEventAdapter<K, V> eventAdapter) {
+    public KafkaSource<K, V> eventAdapter(KafkaEventAdapter<K, V> eventAdapter) {
         this.eventAdapter = eventAdapter;
         return this;
     }

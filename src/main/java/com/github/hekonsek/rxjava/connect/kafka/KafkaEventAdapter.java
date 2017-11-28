@@ -42,16 +42,22 @@ public class KafkaEventAdapter<K, V> {
 
     private final Function<KafkaConsumerRecord<K, V>, Event<V>> mapping;
 
-    static KafkaEventAdapter<String, Map<String, Object>> stringAndBytesToMap() {
+    public static KafkaEventAdapter<String, Map<String, Object>> stringAndBytesToMap() {
         return new KafkaEventAdapter<>(StringDeserializer.class, BytesDeserializer.class,
                 record -> {
-                    Map<String, Object> headers = ImmutableMap.of(
-                            KEY, record.key(),
-                            ADDRESS, record.topic()
-                    );
                     Map<String, Object> value = decodeValue(buffer(((Bytes) record.value()).get()), Map.class);
-                    return new Event<>(headers, value);
+                    return new Event<>(headers(record), value);
                 });
+    }
+
+    public static <X, Y> KafkaEventAdapter<X, Y> simpleMapping(
+            Class<? extends Deserializer<X>> keyDeserializer, Class<? extends Deserializer<Y>> valueDeserializer) {
+        return new KafkaEventAdapter<>(keyDeserializer, valueDeserializer,
+                record -> new Event<>(headers(record), record.value()));
+    }
+
+    private static <X, Y> Map<String, Object> headers(KafkaConsumerRecord<X, Y> record) {
+        return ImmutableMap.of(KEY, record.key(), ADDRESS, record.topic());
     }
 
 }

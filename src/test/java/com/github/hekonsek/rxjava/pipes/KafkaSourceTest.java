@@ -23,7 +23,10 @@ import io.vertx.core.json.Json;
 import io.vertx.ext.unit.Async;
 import io.vertx.ext.unit.TestContext;
 import io.vertx.ext.unit.junit.VertxUnitRunner;
+import io.vertx.reactivex.kafka.client.producer.KafkaProducer;
 import io.vertx.reactivex.kafka.client.producer.KafkaProducerRecord;
+import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.kafka.common.serialization.StringSerializer;
 import org.apache.kafka.common.utils.Bytes;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -32,6 +35,7 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Map;
 
+import static com.github.hekonsek.rxjava.connect.kafka.KafkaEventAdapter.simpleMapping;
 import static com.github.hekonsek.rxjava.pipes.KafkaProducerBuilder.pipeProducer;
 import static com.google.common.io.Files.createTempDir;
 import static io.vertx.reactivex.core.Vertx.vertx;
@@ -51,7 +55,7 @@ public class KafkaSourceTest {
     String topic = randomUUID().toString();
 
     @Test
-    public void shouldConsumeFromSource(TestContext context) {
+    public void shouldConsume(TestContext context) {
         Async async = context.async();
         new KafkaSource<String, Map>(vertx(), topic).build().
                 map(event ->  (String) event.payload().get("foo")).
@@ -62,6 +66,23 @@ public class KafkaSourceTest {
 
         Bytes event = new Bytes(Json.encode(ImmutableMap.of("foo", "bar")).getBytes());
         pipeProducer(vertx()).rxWrite(KafkaProducerRecord.create(topic, "key", event)).subscribe();
+    }
+
+    @Test
+    public void shouldConsumeString(TestContext context) {
+        Async async = context.async();
+        new KafkaSource<String, String>(vertx(), topic).
+                eventAdapter(simpleMapping(StringDeserializer.class, StringDeserializer.class)).build().
+                subscribe(event -> {
+                    assertThat(event.payload()).isEqualTo("foo");
+                    async.complete();
+                });
+
+        Map<String, String> config = ImmutableMap.of(
+                "bootstrap.servers", "localhost:9092",
+                "value.serializer", StringSerializer.class.getName(),
+                "key.serializer", StringSerializer.class.getName());
+        KafkaProducer.create(vertx(), config).rxWrite(KafkaProducerRecord.create(topic, "key", "foo")).subscribe();
     }
 
 }
