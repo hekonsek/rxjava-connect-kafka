@@ -2,3 +2,17 @@ language: java
 
 jdk:
 - oraclejdk8
+
+sudo: false
+
+addons:
+  sonarcloud:
+    organization: hekonsek-github
+    token:
+      secure: "El2butd+rwBYH3OeF+/QZZ978YGZ59P25FZ/TmMgev8vJ/VAPDveWH9z3YYV2XDLOcB1B8jytxISRnv1yZHi6bKcfCwkguqv7IZwfD5qjiQLB37Gd7R0HRqv0+RbjbOXbSSYkrXKVbMp8VnE+L59UDpIjLfQZIXmRjQblYBDiHvln2UO2jBYpmFNKYuY3A1Z+9a01pjoJE91e5JrpyIkEBZPHBQCryhuwCeG106Rn/3Xv7hP35ceYnFDWC21ovyF4k8JGdd1EE1qcOGOb11YiFwQYPu9ekB73dc3/xJ5gSlYHgdaaHeRJjOE2WjU8a83OEJMR35GKtZkyi/I1YYfi8Bj1kXr091EKncLxYb/3hqVoGMQN89x02bIdHM9QiRmBQDnYQk02H3LbbNwZiC2Tc+0nEvT7psrXwtMUgg+BfWpxAl11Bf3bxHLnXC+gIeujzk2BIebwzl3nI9yL2s/x8Gm3ItuTftmVOkPzHzfPrVxxapOKfhua4iWbFXWmztz1yk68hViq/ZCgu1msgq+iodZteYDncQFLXjMGHYg8aRWPOujIvpyNNyxoz/9rnrRpKzGzuucteMrhc/qDw7hL8Wrp/D8y6k71lR4yoPrAK0xAcnaLmTVSNAd6YxmI5N01M7w/+r2lOAE1gpc+gZMxLh3pabzko8Sq8vOqGCNnX4="
+
+script:
+  - mvn clean install sonar:sonar -Pcoverage
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
