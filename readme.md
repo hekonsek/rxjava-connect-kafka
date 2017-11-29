@@ -1,7 +1,7 @@
 # RxJava Kafka connector
 
-[![Version](https://img.shields.io/badge/RxJava%20Connect%20Kafka-0.1-blue.svg)](https://github.com/hekonsek/rxjava-connect-kafka/releases)
-[![Build](https://api.travis-ci.org/hekonsek/rxjava-connect-kafka.svg)](https://travis-ci.org/hekonsek/rxjava-connect-kafka)
+[![Version](https://img.shields.io/badge/RxJava%20Connector%20Kafka-0.1-blue.svg)](https://github.com/hekonsek/rxjava-connector-kafka/releases)
+[![Build](https://api.travis-ci.org/hekonsek/rxjava-connector-kafka.svg)](https://travis-ci.org/hekonsek/rxjava-connector-kafka)
 
 Connector between RxJava events and [Apache Kafka](https://kafka.apache.org) cluster.
 

@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.hekonsek</groupId>
-    <artifactId>rxjava-connect-kafka</artifactId>
+    <artifactId>rxjava-connector-kafka</artifactId>
     <name>${project.artifactId}</name>
     <version>0.2-SNAPSHOT</version>
 
@@ -256,8 +256,8 @@
 
     <!-- Required by Sonatype release -->
 
-    <description>rxjava-connect-kafka</description>
-    <url>https://github.com/hekonsek/rxjava-connect-kafka</url>
+    <description>rxjava-connector-kafka</description>
+    <url>https://github.com/hekonsek/rxjava-connector-kafka</url>
 
     <developers>
         <developer>
@@ -267,9 +267,9 @@
     </developers>
 
     <scm>
-        <connection>scm:git:git@github.com:hekonsek/rxjava-connect-kafka.git</connection>
-        <developerConnection>scm:git:git@github.com:hekonsek/rxjava-connect-kafka.git</developerConnection>
-        <url>git@github.com:hekonsek/rxjava-connect-kafka.git</url>
+        <connection>scm:git:git@github.com:hekonsek/rxjava-connector-kafka.git</connection>
+        <developerConnection>scm:git:git@github.com:hekonsek/rxjava-connector-kafka.git</developerConnection>
+        <url>git@github.com:hekonsek/rxjava-connector-kafka.git</url>
         <tag>HEAD</tag>
     </scm>
 
