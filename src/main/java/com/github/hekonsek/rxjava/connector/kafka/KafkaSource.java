@@ -1,5 +1,5 @@
 /**
- * Licensed to the RxJava Connect Kafka under one or more
+ * Licensed to the RxJava Connector Kafka under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.hekonsek.rxjava.connect.kafka;
+package com.github.hekonsek.rxjava.connector.kafka;
 
 import com.github.hekonsek.rxjava.event.Event;
 import com.google.common.collect.ImmutableMap;
@@ -24,7 +24,7 @@ import io.vertx.reactivex.kafka.client.consumer.KafkaConsumer;
 
 import java.util.Map;
 
-import static com.github.hekonsek.rxjava.connect.kafka.KafkaEventAdapter.stringAndBytesToMap;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.stringAndBytesToMap;
 import static java.util.UUID.randomUUID;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;

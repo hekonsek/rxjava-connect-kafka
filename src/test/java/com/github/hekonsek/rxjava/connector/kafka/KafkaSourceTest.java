@@ -1,5 +1,5 @@
 /**
- * Licensed to the RxJava Connect Kafka under one or more
+ * Licensed to the RxJava Connector Kafka under one or more
  * contributor license agreements.  See the NOTICE file distributed with
  * this work for additional information regarding copyright ownership.
  * The ASF licenses this file to You under the Apache License, Version 2.0
@@ -14,8 +14,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.github.hekonsek.rxjava.connect.kafka;
+package com.github.hekonsek.rxjava.connector.kafka;
 
+import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
 import com.google.common.collect.ImmutableMap;
 import io.debezium.kafka.KafkaCluster;
 import io.vertx.core.json.Json;
@@ -34,8 +35,8 @@ import org.junit.runner.RunWith;
 import java.io.IOException;
 import java.util.Map;
 
-import static com.github.hekonsek.rxjava.connect.kafka.KafkaEventAdapter.simpleMapping;
-import static com.github.hekonsek.rxjava.connect.kafka.KafkaProducerBuilder.pipeProducer;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaProducerBuilder.pipeProducer;
 import static com.github.hekonsek.rxjava.event.Headers.ADDRESS;
 import static com.github.hekonsek.rxjava.event.Headers.KEY;
 import static com.google.common.io.Files.createTempDir;

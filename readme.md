@@ -11,7 +11,7 @@ In order to start using Vert.x Pipes add the following dependency to your Maven 
 
     <dependency>
       <groupId>com.github.hekonsek</groupId>
-      <artifactId>vertx-connect-kafka</artifactId>
+      <artifactId>vertx-connector-kafka</artifactId>
       <version>0.1</version>
     </dependency>
 
@@ -20,7 +20,7 @@ In order to start using Vert.x Pipes add the following dependency to your Maven 
 
 
 ```
-import static com.github.hekonsek.rxjava.connect.kafka.KafkaEventAdapter.simpleMapping;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
 import static com.github.hekonsek.rxjava.event.Headers.address;
 import static com.github.hekonsek.rxjava.event.Headers.key;
 ...
