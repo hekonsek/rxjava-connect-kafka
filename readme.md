@@ -17,10 +17,11 @@ In order to start using Vert.x Pipes add the following dependency to your Maven 
 
 ## Usage
 
-
+This is how you can start consuming messages from Kafka topic:
 
 ```
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.partition;
 import static com.github.hekonsek.rxjava.event.Headers.address;
 import static com.github.hekonsek.rxjava.event.Headers.key;
 ...
@@ -31,6 +32,7 @@ new KafkaSource<String, String>(vertx(), topic).
     String payload = event.payload();
     String key = key(event);
     String topic = address(event);
+    int partition = partition(event);
   });
 ```
 

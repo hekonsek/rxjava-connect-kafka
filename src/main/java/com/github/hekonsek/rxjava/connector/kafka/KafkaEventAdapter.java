@@ -28,6 +28,8 @@ import org.apache.kafka.common.utils.Bytes;
 
 import java.util.Map;
 
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.OFFSET;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.PARTITION;
 import static com.github.hekonsek.rxjava.event.Headers.ADDRESS;
 import static com.github.hekonsek.rxjava.event.Headers.KEY;
 import static io.vertx.core.buffer.Buffer.buffer;
@@ -57,7 +59,12 @@ public class KafkaEventAdapter<K, V> {
     }
 
     private static <X, Y> Map<String, Object> headers(KafkaConsumerRecord<X, Y> record) {
-        return ImmutableMap.of(KEY, record.key(), ADDRESS, record.topic());
+        return ImmutableMap.of(
+                KEY, record.key(),
+                ADDRESS, record.topic(),
+                OFFSET, record.offset(),
+                PARTITION, record.partition()
+        );
     }
 
 }
