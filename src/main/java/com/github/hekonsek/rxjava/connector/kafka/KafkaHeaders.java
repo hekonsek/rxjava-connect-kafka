@@ -7,9 +7,9 @@ final public class KafkaHeaders {
     private KafkaHeaders() {
     }
 
-    public static String OFFSET = "rxjava.connector.kafka.offset";
+    public static final String OFFSET = "rxjava.connector.kafka.offset";
 
-    public static String PARTITION = "rxjava.connector.kafka.partition";
+    public static final String PARTITION = "rxjava.connector.kafka.partition";
 
     long offset(Event event) {
         return (long) event.headers().get(OFFSET);
