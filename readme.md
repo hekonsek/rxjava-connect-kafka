@@ -1,6 +1,6 @@
 # RxJava Kafka connector
 
-[![Version](https://img.shields.io/badge/RxJava%20Connector%20Kafka-0.2-blue.svg)](https://github.com/hekonsek/rxjava-connector-kafka/releases)
+[![Version](https://img.shields.io/badge/RxJava%20Connector%20Kafka-0.3-blue.svg)](https://github.com/hekonsek/rxjava-connector-kafka/releases)
 [![Build](https://api.travis-ci.org/hekonsek/rxjava-connector-kafka.svg)](https://travis-ci.org/hekonsek/rxjava-connector-kafka)
 [![Coverage](https://sonarcloud.io/api/badges/measure?key=com.github.hekonsek%3Arxjava-connector-kafka&metric=coverage)](https://sonarcloud.io/component_measures?id=com.github.hekonsek%3Arxjava-connector-kafka&metric=coverage)
 
@@ -13,7 +13,7 @@ In order to start using Vert.x Pipes add the following dependency to your Maven 
     <dependency>
       <groupId>com.github.hekonsek</groupId>
       <artifactId>vertx-connector-kafka</artifactId>
-      <version>0.2</version>
+      <version>0.3</version>
     </dependency>
 
 ## Usage
