@@ -21,8 +21,11 @@ In order to start using Vert.x Pipes add the following dependency to your Maven 
 This is how you can start consuming messages from Kafka topic:
 
 ```
+import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
+
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.partition;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.offset;
 import static com.github.hekonsek.rxjava.event.Headers.address;
 import static com.github.hekonsek.rxjava.event.Headers.key;
 ...
@@ -34,6 +37,28 @@ new KafkaSource<String, String>(vertx(), topic).
     String key = key(event);
     String topic = address(event);
     int partition = partition(event);
+    int offset = partition(event);
+  });
+```
+
+Default `eventAdapter` implementation assumes that key deserializer is `StringDeserializer` while value
+deserializer is `BytesDeserializer` where value is encoded as JSON payload and converted to Map. So you can simply
+consume JSON payload as follows: 
+
+```
+import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
+
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.partition;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.offset;
+import static com.github.hekonsek.rxjava.event.Headers.address;
+import static com.github.hekonsek.rxjava.event.Headers.key;
+...
+
+new KafkaSource<String, String>(vertx(), topic).build().
+  subscribe(event -> {
+    String key = key(event);
+    Map<String, Object> payload = event.payload();
   });
 ```
 
