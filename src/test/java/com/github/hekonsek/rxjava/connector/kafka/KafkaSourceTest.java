@@ -36,6 +36,8 @@ import java.io.IOException;
 import java.util.Map;
 
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.offset;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.partition;
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaProducerBuilder.pipeProducer;
 import static com.github.hekonsek.rxjava.event.Headers.ADDRESS;
 import static com.github.hekonsek.rxjava.event.Headers.KEY;
@@ -76,6 +78,8 @@ public class KafkaSourceTest {
         new KafkaSource<String, Map>(vertx(), topic).build().
                 subscribe(event -> {
                     assertThat(event.headers()).containsEntry(KEY, "key").containsEntry(ADDRESS, topic);
+                    assertThat(offset(event)).isGreaterThanOrEqualTo(0);
+                    assertThat(partition(event)).isEqualTo(0);
                     async.complete();
                 });
 

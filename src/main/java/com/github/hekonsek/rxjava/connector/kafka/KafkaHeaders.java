@@ -11,11 +11,11 @@ final public class KafkaHeaders {
 
     public static final String PARTITION = "rxjava.connector.kafka.partition";
 
-    long offset(Event event) {
+    public static long offset(Event event) {
         return (long) event.headers().get(OFFSET);
     }
 
-    int partition(Event event) {
+    public static int partition(Event event) {
         return (int) event.headers().get(PARTITION);
     }
 
