@@ -20,7 +20,6 @@ import com.github.hekonsek.rxjava.event.Event;
 import com.google.common.collect.ImmutableMap;
 import io.reactivex.functions.Function;
 import io.vertx.reactivex.kafka.client.consumer.KafkaConsumerRecord;
-import lombok.Data;
 import org.apache.kafka.common.serialization.BytesDeserializer;
 import org.apache.kafka.common.serialization.Deserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
@@ -35,7 +34,6 @@ import static com.github.hekonsek.rxjava.event.Headers.KEY;
 import static io.vertx.core.buffer.Buffer.buffer;
 import static io.vertx.core.json.Json.decodeValue;
 
-@Data
 public class KafkaEventAdapter<K, V> {
 
     private final Class<? extends Deserializer> keyDeserializer;
@@ -44,10 +42,21 @@ public class KafkaEventAdapter<K, V> {
 
     private final Function<KafkaConsumerRecord<K, V>, Event<V>> mapping;
 
-    public static KafkaEventAdapter<String, Map<String, Object>> stringAndBytesToMap() {
+    public KafkaEventAdapter(Class<? extends Deserializer> keyDeserializer, Class<? extends Deserializer> valueDeserializer,
+            Function<KafkaConsumerRecord<K, V>, Event<V>> mapping) {
+        this.keyDeserializer = keyDeserializer;
+        this.valueDeserializer = valueDeserializer;
+        this.mapping = mapping;
+    }
+
+    // Factory methods
+
+    public static KafkaEventAdapter<String, Map<String, Object>> stringAndJsonBytesToMap() {
         return new KafkaEventAdapter<>(StringDeserializer.class, BytesDeserializer.class,
                 record -> {
-                    Map<String, Object> value = decodeValue(buffer(((Bytes) record.value()).get()), Map.class);
+                    @SuppressWarnings("unchecked") Map<String, Object> value = record.value() != null ?
+                            decodeValue(buffer(((Bytes) record.value()).get()), Map.class) :
+                            null;
                     return new Event<>(headers(record), value);
                 });
     }
@@ -57,6 +66,22 @@ public class KafkaEventAdapter<K, V> {
         return new KafkaEventAdapter<>(keyDeserializer, valueDeserializer,
                 record -> new Event<>(headers(record), record.value()));
     }
+
+    // Getters
+
+    public Class<? extends Deserializer> keyDeserializer() {
+        return keyDeserializer;
+    }
+
+    public Class<? extends Deserializer> valueDeserializer() {
+        return valueDeserializer;
+    }
+
+    public Function<KafkaConsumerRecord<K, V>, Event<V>> mapping() {
+        return mapping;
+    }
+
+    // Private helpers
 
     private static <X, Y> Map<String, Object> headers(KafkaConsumerRecord<X, Y> record) {
         return ImmutableMap.of(

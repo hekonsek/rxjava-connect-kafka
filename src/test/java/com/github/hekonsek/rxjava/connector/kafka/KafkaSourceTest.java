@@ -73,6 +73,18 @@ public class KafkaSourceTest {
     }
 
     @Test
+    public void shouldConsumeNullPayload(TestContext context) {
+        Async async = context.async();
+        new KafkaSource<String, Map<String, Object>>(vertx(), topic).build().
+                subscribe(event -> {
+                    assertThat(event.payload()).isNull();
+                    async.complete();
+                });
+
+        pipeProducer(vertx()).rxWrite(KafkaProducerRecord.create(topic, "key", null)).subscribe();
+    }
+
+    @Test
     public void shouldConsumeKafkaMetadata(TestContext context) {
         Async async = context.async();
         new KafkaSource<String, Map>(vertx(), topic).build().

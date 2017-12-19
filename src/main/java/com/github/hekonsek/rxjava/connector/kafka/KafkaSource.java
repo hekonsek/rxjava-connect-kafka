@@ -24,7 +24,7 @@ import io.vertx.reactivex.kafka.client.consumer.KafkaConsumer;
 
 import java.util.Map;
 
-import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.stringAndBytesToMap;
+import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.stringAndJsonBytesToMap;
 import static java.util.UUID.randomUUID;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.AUTO_OFFSET_RESET_CONFIG;
 import static org.apache.kafka.clients.consumer.ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG;
@@ -43,7 +43,7 @@ public class KafkaSource<K, V> {
     private String groupId = randomUUID().toString();
 
     @SuppressWarnings("unchecked")
-    private KafkaEventAdapter<K, V> eventAdapter = (KafkaEventAdapter<K, V>) stringAndBytesToMap();
+    private KafkaEventAdapter<K, V> eventAdapter = (KafkaEventAdapter<K, V>) stringAndJsonBytesToMap();
 
     public KafkaSource(Vertx vertx, String topic) {
         this.vertx = vertx;
@@ -54,11 +54,11 @@ public class KafkaSource<K, V> {
         Map<String, String> config = ImmutableMap.of(
                 GROUP_ID_CONFIG, groupId,
                 BOOTSTRAP_SERVERS_CONFIG, bootstrapServers,
-                KEY_DESERIALIZER_CLASS_CONFIG, eventAdapter.getKeyDeserializer().getName(),
-                VALUE_DESERIALIZER_CLASS_CONFIG, eventAdapter.getValueDeserializer().getName(),
+                KEY_DESERIALIZER_CLASS_CONFIG, eventAdapter.keyDeserializer().getName(),
+                VALUE_DESERIALIZER_CLASS_CONFIG, eventAdapter.valueDeserializer().getName(),
                 AUTO_OFFSET_RESET_CONFIG, "earliest");
         return KafkaConsumer.<K, V>create(vertx, config).subscribe(topic).
-                toObservable().map(eventAdapter.getMapping());
+                toObservable().map(eventAdapter.mapping());
     }
 
     public KafkaSource<K, V> bootstrapServers(String bootstrapServers) {
