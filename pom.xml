@@ -23,9 +23,9 @@
         <!-- Dependencies versions -->
         <assertj.version>3.8.0</assertj.version>
         <debezium.version>0.5.1</debezium.version>
-        <jackson.version>2.9.0</jackson.version>
+        <jackson.version>2.9.3</jackson.version>
         <logback.version>1.2.3</logback.version>
-        <rxjava-event.version>0.6</rxjava-event.version>
+        <rxjava-event.version>0.7</rxjava-event.version>
         <vertx.version>3.5.0</vertx.version>
 
         <!-- Plugins versions -->
