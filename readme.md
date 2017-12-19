@@ -26,16 +26,16 @@ import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.partition;
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.offset;
-import static com.github.hekonsek.rxjava.event.Headers.address;
-import static com.github.hekonsek.rxjava.event.Headers.key;
+import static com.github.hekonsek.rxjava.event.Headers.requiredAddress;
+import static com.github.hekonsek.rxjava.event.Headers.requiredKey;
 ...
 
-new KafkaSource<String, String>(vertx(), topic).
+new KafkaSource<String, String>(vertx(), "topic").
   eventAdapter(simpleMapping(StringDeserializer.class, StringDeserializer.class)).build().
   subscribe(event -> {
     String payload = event.payload();
-    String key = key(event);
-    String topic = address(event);
+    String key = requiredKey(event);
+    String topic = requiredAddress(event);
     int partition = partition(event);
     int offset = partition(event);
   });
@@ -47,19 +47,30 @@ consume JSON payload as follows:
 
 ```
 import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
-
+import java.util.Map;
 import static com.github.hekonsek.rxjava.connector.kafka.KafkaEventAdapter.simpleMapping;
-import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.partition;
-import static com.github.hekonsek.rxjava.connector.kafka.KafkaHeaders.offset;
-import static com.github.hekonsek.rxjava.event.Headers.address;
-import static com.github.hekonsek.rxjava.event.Headers.key;
+
 ...
 
-new KafkaSource<String, String>(vertx(), topic).build().
+new KafkaSource<String, Map<String,Object>>(vertx(), "topic").build().
   subscribe(event -> {
     String key = key(event);
     Map<String, Object> payload = event.payload();
   });
+```
+
+You can configure Kafka source using fluent builder API:
+
+```
+import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
+import java.util.Map;
+
+...
+
+new KafkaSource<String, Map<String,Object>>(vertx(), "topic").
+  bootstrapServers("mykafkahost:9092").
+  groupId("myGroupId").
+  build();
 ```
 
 ## License
