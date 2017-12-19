@@ -16,7 +16,6 @@
  */
 package com.github.hekonsek.rxjava.connector.kafka;
 
-import com.github.hekonsek.rxjava.connector.kafka.KafkaSource;
 import com.google.common.collect.ImmutableMap;
 import io.debezium.kafka.KafkaCluster;
 import io.vertx.core.json.Json;
